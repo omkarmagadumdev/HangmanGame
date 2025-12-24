@@ -1,17 +1,20 @@
 
+import { Routes, Route } from 'react-router-dom'
 import './App.css'
-import Button from './Components/Button/Button'
+import StartGame from './pages/StartGame'
+import PlayGame from './pages/PlayGame'
+
+
 
 function App() {
 
   return (
-    <div>
-
-      <Button text="Click me" onclickhandler={()=> console.log("clicked 1 button")}/>
-       <Button text="Click me 2" onclickhandler={()=> console.log("clicked 2 button")}/>
-       <Button text="Click me 3" onclickhandler={()=> console.log("clicked 3 button")}/>
-        
-    </div>)
+  <Routes>
+    <Route path='/' element={<StartGame />} />
+    <Route path='/Start' element={<StartGame />} />
+    <Route path='/play' element={<PlayGame />} />
+  </Routes>
+  )
 }
 
 export default App
