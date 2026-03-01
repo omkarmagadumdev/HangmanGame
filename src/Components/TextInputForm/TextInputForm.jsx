@@ -1,4 +1,4 @@
-import TextInput from "../Textinput/Textinput";
+import TextInput from "../Textinput/TextInput";
 import Button from "../Button/Button";
 
 const TextInputForm = ({ handleFormSubmit, handleTextInputChange,handleShowHideClick , inputType}) => {
@@ -25,11 +25,11 @@ const TextInputForm = ({ handleFormSubmit, handleTextInputChange,handleShowHideC
                     onclickhandler={handleShowHideClick} 
                     />
                     
-                    <Button 
-                    type = "Submit"
+                    <Button
+                    type = "submit"
                     Styletype="primary"
                     text="Submit"
-                    onclickhandler={handleFormSubmit    }
+                    onclickhandler={handleFormSubmit}
                      
                     />
                 </form>
