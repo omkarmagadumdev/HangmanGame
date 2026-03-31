@@ -13,15 +13,13 @@ function TextInputFormContainer() {
         console.log("form submitted",value);
         if(value){
 
-                navigate('/play',{state:{wordSelected:value }})
+                navigate('/play',{state:{wordSelected:value}})
         }
         
     }
 
     function handleTextInputChange(event) {
-        console.log(event.target.value);
-        setvalue(event.target.value)
-        
+        setvalue(event.target.value) 
     }
 
     function handleShowHideClick() {

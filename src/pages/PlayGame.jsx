@@ -4,7 +4,7 @@ import MaskedText from "../Components/MaskedText/MaskedText"
 
 const PlayGame = ()=>{
 
-const { state } = useLocation()
+const {state}=    useLocation()
 const selectedWord = state?.wordSelected || "No word selected"
 const guessedLetters = ["H","E"]
 
@@ -19,7 +19,7 @@ const guessedLetters = ["H","E"]
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-               <div className="rounded-2xl border border-indigo-300/20 bg-slate-900/60 p-5 space-y-2">
+               <div className="rounded-2xl border border-indigo-300/20 bg-slate-900/60 p-5 space-y-2">   
                   <p className="text-xs uppercase tracking-wide text-slate-400">Selected Word</p>
                   <p className="text-lg md:text-xl font-semibold break-words">{selectedWord}</p>
                </div>

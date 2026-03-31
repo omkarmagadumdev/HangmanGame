@@ -1,17 +1,16 @@
-export function getAllCharacters(originalWord,guessedLetters){
-    guessedLetters = guessedLetters.map(letter => letter.toUpperCase());
+export function getMaskedString(originalWord, guessedLetters = []) {
+    const normalizedGuesses = guessedLetters.map((letter) => letter.toUpperCase());
+    const guessedLetterSet = new Set(normalizedGuesses);
 
-    const guessedLettersSet = new Set(guessedLetters);
-
-    return originalWord.toUpperCase().split('').map(char=>{
-        if(char === ' '){
-            return ' ';
+    return originalWord.toUpperCase().split("").map((char) => {
+        if (char === " ") {
+            return " ";
         }
 
-        if(guessedLettersSet.has(char)){
+        if (guessedLetterSet.has(char)) {
             return char;
         }
 
-        return '_';
+        return "_";
     });
 }

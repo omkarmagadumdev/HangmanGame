@@ -1,10 +1,10 @@
 
-import { getAllCharacters } from "./maskedUtillity"
+import { getMaskedString } from "./maskedUtillity"
 
 
 const MaskedText = ({text,guessedLetters})=>{
 
-  const maskedString = getAllCharacters(text,guessedLetters)
+  const maskedString = getMaskedString(text,guessedLetters)
     return(
       <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3">
           {maskedString.map((letter,index)=>{
