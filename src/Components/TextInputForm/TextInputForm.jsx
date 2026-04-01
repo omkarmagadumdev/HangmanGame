@@ -19,11 +19,13 @@ const TextInputForm = ({ handleFormSubmit, handleTextInputChange,handleShowHideC
                         onChangeHandler={handleTextInputChange}
                     />
 
-                    <Button 
-                    styletype = "warning" 
-                    text = {inputType === "password" ? "show" : "Hide"}
-                    onclickhandler={handleShowHideClick} 
-                    />
+                    <div className="mt-2">
+                        <Button 
+                        styletype = "warning" 
+                        text = {inputType === "password" ? "show" : "Hide"}
+                        onclickhandler={handleShowHideClick} 
+                        />
+                    </div>
                     
                     <Button
                     type = "submit"
