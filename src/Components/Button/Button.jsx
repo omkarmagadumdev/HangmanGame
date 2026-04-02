@@ -7,7 +7,7 @@ const Button = ({text , onclickhandler,type ="button"}) => {
         <button 
         onClick={onclickhandler} 
         type={type}
-        className=" mt-2px w-full cursor-pointer px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-200 ease-in-out transform hover:scale-105 shadow-md"
+        className="w-full  ms-2 cursor-pointer px-5 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition duration-200 ease-in-out shadow-lg shadow-indigo-900/30"
         >
             {text}
         </button>

@@ -12,6 +12,7 @@ function TextInputFormContainer() {
         event.preventDefault();
         console.log("form submitted",value);
         if(value){
+                sessionStorage.setItem("wordSelected", value)
 
                 navigate('/play',{state:{wordSelected:value}})
         }

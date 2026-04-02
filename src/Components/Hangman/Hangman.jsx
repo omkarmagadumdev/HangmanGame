@@ -12,8 +12,8 @@ function Hangman({ step }){
         const images = [Level1,Level2,Level3,Level4,Level5,Level6,Level7,Level8];
 
         return(
-            <div className="w-[300px] h-[300px]">
-                <img src={step >= images.length ? images[images.length-1]:images[step] } alt="" />
+            <div className="w-full max-w-xs sm:max-w-sm aspect-square flex items-center justify-center">
+                <img src={step >= images.length ? images[images.length-1]:images[step] } alt="Hangman progress" className="w-full h-full object-contain drop-shadow-xl" />
             </div>
         )
 }

@@ -6,10 +6,10 @@ function LetterButtons({ text, guessedLetters,onLettersClick}){
 
         const buttonStyle = function(letter){
             if(guessedLettersSet.has(letter)){
-                return `${originalLettersSet.has(letter) ? 'bg-green-500' : "bg-red-500"}`;
+                return `${originalLettersSet.has(letter) ? 'bg-emerald-500/90 border-emerald-300/70' : "bg-rose-500/90 border-rose-300/70"}`;
             }
             else{
-                return 'bg-blue-500'
+                return 'bg-indigo-600 hover:bg-indigo-500 border-indigo-300/40'
             }
         }
         const buttons = ALPHABETS.map(letter=> {
@@ -18,7 +18,7 @@ function LetterButtons({ text, guessedLetters,onLettersClick}){
                     key={`button-${letter}`}
                     onClick={onLettersClick}
                     disabled={guessedLettersSet.has(letter)}
-                    className={ ` cursor-pointer px-4 py-2 m-1 text-white font-semibold rounded-lg transition-colors duration-200 hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-70 ${buttonStyle(letter)}`}
+                        className={ `cursor-pointer min-w-10 h-10 px-3 text-sm text-white font-semibold rounded-lg border transition duration-200 disabled:cursor-not-allowed disabled:opacity-70 ${buttonStyle(letter)}`}
                 >
                         { letter }
                 </button>
@@ -27,7 +27,7 @@ function LetterButtons({ text, guessedLetters,onLettersClick}){
 
 
         return (
-            <div className="flex flex-wrap justify-center gap-2 p-4 ">
+            <div className="flex flex-wrap justify-center gap-2 p-1 md:p-2">
                 { buttons }
             </div>
         )

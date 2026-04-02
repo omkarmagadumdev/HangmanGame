@@ -19,21 +19,21 @@ const TextInputForm = ({ handleFormSubmit, handleTextInputChange,handleShowHideC
                         onChangeHandler={handleTextInputChange}
                     />
 
-                    <div className="mt-2">
+                    <div className="mt-2 flex justify-between">
                         <Button 
                         styletype = "warning" 
                         text = {inputType === "password" ? "show" : "Hide"}
                         onclickhandler={handleShowHideClick} 
                         />
-                    </div>
                     
                     <Button
                     type = "submit"
                     Styletype="primary"
                     text="Submit"
                     onclickhandler={handleFormSubmit}
-                     
+                    
                     />
+                    </div>
                 </form>
             </div>
         </div>
