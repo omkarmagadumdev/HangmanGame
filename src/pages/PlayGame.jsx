@@ -9,6 +9,7 @@ const PlayGame = ()=>{
 
    const {state}= useLocation()
    const selectedWord = state?.wordSelected || sessionStorage.getItem("wordSelected") || "No word selected"
+   const selectedHint = state?.hintSelected || sessionStorage.getItem("hintSelected") || "No hint available"
    const [guessedLetters, setGuessedLetters] = useState([])
    const [step , setStep] = useState(0)
 
@@ -28,6 +29,7 @@ const PlayGame = ()=>{
 
    return (
       <div className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-indigo-950 text-white px-4 py-8 md:p-8">
+               <Link to='/'>Home</Link>
          <div className="mx-auto w-full max-w-6xl space-y-6">
             <div className="w-full rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl p-6 md:p-10 space-y-3 text-center">
                <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Hangman</p>
@@ -35,9 +37,14 @@ const PlayGame = ()=>{
                <p className="text-slate-300 max-w-xl mx-auto">Try to guess the hidden word before your chances run out.</p>
             </div>
 
-            {state?.wordSelected && (
+            {selectedWord !== "No word selected" && (
                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   <div className="lg:col-span-2 space-y-6">
+                     <div className="rounded-2xl border border-amber-300/30 bg-amber-500/10 p-5 text-center space-y-1">
+                        <p className="text-xs uppercase tracking-[0.2em] text-amber-200">Hint</p>
+                        <p className="text-amber-50 font-medium">{selectedHint}</p>
+                     </div>
+
                      <div className="rounded-2xl border border-indigo-300/20 bg-slate-900/60 p-5 space-y-3 text-center">
                         <p className="text-xs uppercase tracking-wide text-slate-400">Guessed Letters</p>
                         <div className="flex min-h-10 flex-wrap gap-2 justify-center">
