@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from "../Components/Button/Button"
+import { wordContext } from '../context/wordContext';
 
 const Home = () => {
   const [word, setWord] = useState('');
   const [hint, setHint] = useState('');
+ 
 
   useEffect(() => {
     let isMounted = true;

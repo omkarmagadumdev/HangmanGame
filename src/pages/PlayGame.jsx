@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import MaskedText from "../Components/MaskedText/MaskedText"
 import LetterButtons from "../Components/LetterButtons/LetterButtons"
 import Hangman from "../Components/Hangman/Hangman"
+import { wordContext } from "../context/wordContext"
 
 
 const PlayGame = ()=>{
@@ -12,6 +13,7 @@ const PlayGame = ()=>{
    const selectedHint = state?.hintSelected || sessionStorage.getItem("hintSelected") || "No hint available"
    const [guessedLetters, setGuessedLetters] = useState([])
    const [step , setStep] = useState(0)
+    const { wordList, setWordList } = useContext(wordContext);
 
    const handleLetterClick = (event) => {
       const letter = event.target.innerText
@@ -36,7 +38,9 @@ const PlayGame = ()=>{
                <h1 className="text-3xl md:text-4xl font-bold">Play Game</h1>
                <p className="text-slate-300 max-w-xl mx-auto">Try to guess the hidden word before your chances run out.</p>
             </div>
-
+               <div>
+                  {wordList}
+               </div>
             {selectedWord !== "No word selected" && (
                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   <div className="lg:col-span-2 space-y-6">
