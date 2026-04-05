@@ -4,16 +4,20 @@ import MaskedText from "../Components/MaskedText/MaskedText"
 import LetterButtons from "../Components/LetterButtons/LetterButtons"
 import Hangman from "../Components/Hangman/Hangman"
 import { wordContext } from "../context/wordContext"
+import { useWordStore } from "../stores/useWordStore"
 
 
 const PlayGame = ()=>{
-
    const {state}= useLocation()
    const selectedWord = state?.wordSelected || sessionStorage.getItem("wordSelected") || "No word selected"
    const selectedHint = state?.hintSelected || sessionStorage.getItem("hintSelected") || "No hint available"
    const [guessedLetters, setGuessedLetters] = useState([])
    const [step , setStep] = useState(0)
-    const { wordList, setWordList } = useContext(wordContext);
+   const {word , wordList, setWordList,setWord} = useWordStore()
+
+   const handleNewWord = (word)=>{
+
+   }
 
    const handleLetterClick = (event) => {
       const letter = event.target.innerText
@@ -39,7 +43,7 @@ const PlayGame = ()=>{
                <p className="text-slate-300 max-w-xl mx-auto">Try to guess the hidden word before your chances run out.</p>
             </div>
                <div>
-                  {wordList}
+                  {wordList.map((wordObject)=> (<li key={wordObject.id} >{wordObject.wordValue}</li>) )}
                </div>
             {selectedWord !== "No word selected" && (
                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -78,12 +82,11 @@ const PlayGame = ()=>{
                         >
                            Back
                         </Link>
-                        <Link
-                           to="/"
-                           className="flex-1 text-center px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition font-semibold"
-                        >
-                           New Word
-                        </Link>
+                        <button 
+                           onClick={handleNewWord}                    
+                        className="flex-1 text-center px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition font-semibold">
+                           New Word 
+                        </button>
                      </div>
                   </div>
 

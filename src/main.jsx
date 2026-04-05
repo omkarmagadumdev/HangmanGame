@@ -6,9 +6,9 @@ import { BrowserRouter } from 'react-router-dom'
 import { wordContext } from './context/wordContext.js'
 createRoot(document.getElementById('root')).render(
 
-    <wordContext.provider>
+    
     <BrowserRouter>
       <App />
     </BrowserRouter>
-    </wordContext.provider>
+    
 )

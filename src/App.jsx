@@ -10,8 +10,10 @@ import {wordContext} from "./context/wordContext"
 
 function App() {
     const [wordList, setWordList] = useState([])
+    const [word,setWord] = useState('');
+
   return (
-    <wordContext.Provider value={{ wordList, setWordList }}>
+  
 
   <Routes>
     <Route path='/' element={<Home />} />
@@ -19,7 +21,7 @@ function App() {
     <Route path='/play' element={<PlayGame />} />
   </Routes>
 
-    </wordContext.Provider>
+
   )
 }
 
