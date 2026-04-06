@@ -1,6 +1,6 @@
 const ALPHABETS = "QWERTYUIOPASDFGHJKLZXCVBNM".split('');
 
-function LetterButtons({ text, guessedLetters,onLettersClick}){
+function LetterButtons({ text, guessedLetters, onLettersClick, gameOver = false }){
     const originalLettersSet = new Set(text.toUpperCase().split(''));
         const guessedLettersSet = new Set(guessedLetters);
 
@@ -17,7 +17,7 @@ function LetterButtons({ text, guessedLetters,onLettersClick}){
                 <button
                     key={`button-${letter}`}
                     onClick={onLettersClick}
-                    disabled={guessedLettersSet.has(letter)}
+                    disabled={guessedLettersSet.has(letter) || gameOver}
                         className={ `cursor-pointer min-w-10 h-10 px-3 text-sm text-white font-semibold rounded-lg border transition duration-200 disabled:cursor-not-allowed disabled:opacity-70 ${buttonStyle(letter)}`}
                 >
                         { letter }

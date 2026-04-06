@@ -1,9 +1,8 @@
-import { useContext, useState } from "react"
+import { useMemo, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import MaskedText from "../Components/MaskedText/MaskedText"
 import LetterButtons from "../Components/LetterButtons/LetterButtons"
 import Hangman from "../Components/Hangman/Hangman"
-import { wordContext } from "../context/wordContext"
 import { useWordStore } from "../stores/useWordStore"
 
 
@@ -13,13 +12,40 @@ const PlayGame = ()=>{
    const selectedHint = state?.hintSelected || sessionStorage.getItem("hintSelected") || "No hint available"
    const [guessedLetters, setGuessedLetters] = useState([])
    const [step , setStep] = useState(0)
-   const {word , wordList, setWordList,setWord} = useWordStore()
+   const { wordList } = useWordStore()
+   const maxSteps = 7
 
-   const handleNewWord = (word)=>{
+   const uniqueWordLetters = useMemo(() => {
+      return [...new Set(selectedWord.toUpperCase().split("").filter((char) => /[A-Z]/.test(char)))]
+   }, [selectedWord])
+
+   const hasWon = uniqueWordLetters.length > 0 && uniqueWordLetters.every((letter) => guessedLetters.includes(letter))
+   const hasLost = step >= maxSteps
+   const isGameOver = hasWon || hasLost
+
+   const handleNewWord = ()=>{
+      if(!wordList.length){
+         setGuessedLetters([])
+         setStep(0)
+         return
+      }
+
+      const randomIndex = Math.floor(Math.random() * wordList.length)
+      const selectedWordObject = wordList[randomIndex]
+      const nextWord = selectedWordObject.wordValue || ""
+      const nextHint = selectedWordObject.hint || selectedWordObject.hintValue || "No hint available"
+
+      sessionStorage.setItem("wordSelected", nextWord)
+      sessionStorage.setItem("hintSelected", nextHint)
+
+      setGuessedLetters([])
+      setStep(0)
 
    }
 
    const handleLetterClick = (event) => {
+      if(isGameOver) return
+
       const letter = event.target.innerText
       if (!letter || guessedLetters.includes(letter)) return
 
@@ -72,8 +98,16 @@ const PlayGame = ()=>{
                      </div>
 
                      <div className="rounded-2xl border border-white/10 bg-white/5 p-4 md:p-6">
-                        <LetterButtons text={selectedWord} guessedLetters={guessedLetters} onLettersClick={handleLetterClick} />
+                        <LetterButtons text={selectedWord} guessedLetters={guessedLetters} onLettersClick={handleLetterClick} gameOver={isGameOver} />
                      </div>
+
+                     {hasWon && (
+                        <div className="rounded-2xl border border-emerald-300/40 bg-emerald-500/10 p-6 text-center space-y-3">
+                           <p className="text-xs uppercase tracking-[0.2em] text-emerald-200">Success</p>
+                           <h2 className="text-2xl md:text-3xl font-bold text-emerald-100">Congratulations! You Won!</h2>
+                           <p className="text-emerald-50/90">You guessed the word correctly: <span className="font-semibold">{selectedWord.toUpperCase()}</span></p>
+                        </div>
+                     )}
 
                      <div className="flex flex-col sm:flex-row gap-3">
                         <Link
