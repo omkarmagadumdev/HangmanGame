@@ -1,19 +1,51 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import MaskedText from "../Components/MaskedText/MaskedText"
 import LetterButtons from "../Components/LetterButtons/LetterButtons"
 import Hangman from "../Components/Hangman/Hangman"
+import { useWordStore } from "../stores/useWordStore"
 
 
 const PlayGame = ()=>{
-
    const {state}= useLocation()
    const selectedWord = state?.wordSelected || sessionStorage.getItem("wordSelected") || "No word selected"
    const selectedHint = state?.hintSelected || sessionStorage.getItem("hintSelected") || "No hint available"
    const [guessedLetters, setGuessedLetters] = useState([])
    const [step , setStep] = useState(0)
+   const { wordList } = useWordStore()
+   const maxSteps = 7
+
+   const uniqueWordLetters = useMemo(() => {
+      return [...new Set(selectedWord.toUpperCase().split("").filter((char) => /[A-Z]/.test(char)))]
+   }, [selectedWord])
+
+   const hasWon = uniqueWordLetters.length > 0 && uniqueWordLetters.every((letter) => guessedLetters.includes(letter))
+   const hasLost = step >= maxSteps
+   const isGameOver = hasWon || hasLost
+
+   const handleNewWord = ()=>{
+      if(!wordList.length){
+         setGuessedLetters([])
+         setStep(0)
+         return
+      }
+
+      const randomIndex = Math.floor(Math.random() * wordList.length)
+      const selectedWordObject = wordList[randomIndex]
+      const nextWord = selectedWordObject.wordValue || ""
+      const nextHint = selectedWordObject.hint || selectedWordObject.hintValue || "No hint available"
+
+      sessionStorage.setItem("wordSelected", nextWord)
+      sessionStorage.setItem("hintSelected", nextHint)
+
+      setGuessedLetters([])
+      setStep(0)
+
+   }
 
    const handleLetterClick = (event) => {
+      if(isGameOver) return
+
       const letter = event.target.innerText
       if (!letter || guessedLetters.includes(letter)) return
 
@@ -36,7 +68,9 @@ const PlayGame = ()=>{
                <h1 className="text-3xl md:text-4xl font-bold">Play Game</h1>
                <p className="text-slate-300 max-w-xl mx-auto">Try to guess the hidden word before your chances run out.</p>
             </div>
-
+               <div>
+                  {wordList.map((wordObject)=> (<li key={wordObject.id} >{wordObject.wordValue}</li>) )}
+               </div>
             {selectedWord !== "No word selected" && (
                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   <div className="lg:col-span-2 space-y-6">
@@ -64,8 +98,16 @@ const PlayGame = ()=>{
                      </div>
 
                      <div className="rounded-2xl border border-white/10 bg-white/5 p-4 md:p-6">
-                        <LetterButtons text={selectedWord} guessedLetters={guessedLetters} onLettersClick={handleLetterClick} />
+                        <LetterButtons text={selectedWord} guessedLetters={guessedLetters} onLettersClick={handleLetterClick} gameOver={isGameOver} />
                      </div>
+
+                     {hasWon && (
+                        <div className="rounded-2xl border border-emerald-300/40 bg-emerald-500/10 p-6 text-center space-y-3">
+                           <p className="text-xs uppercase tracking-[0.2em] text-emerald-200">Success</p>
+                           <h2 className="text-2xl md:text-3xl font-bold text-emerald-100">Congratulations! You Won!</h2>
+                           <p className="text-emerald-50/90">You guessed the word correctly: <span className="font-semibold">{selectedWord.toUpperCase()}</span></p>
+                        </div>
+                     )}
 
                      <div className="flex flex-col sm:flex-row gap-3">
                         <Link
@@ -74,12 +116,11 @@ const PlayGame = ()=>{
                         >
                            Back
                         </Link>
-                        <Link
-                           to="/"
-                           className="flex-1 text-center px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition font-semibold"
-                        >
-                           New Word
-                        </Link>
+                        <button 
+                           onClick={handleNewWord}                    
+                        className="flex-1 text-center px-5 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 transition font-semibold">
+                           New Word 
+                        </button>
                      </div>
                   </div>
 
